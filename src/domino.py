@@ -46,3 +46,9 @@ class Node:
 			return "Root Node    "
 		else:
 			return "Parent node: " + self.parentNode.describe() +  "Domino: " + self.addedDomino.describe() + "   State: " + self.state.describe()
+
+	def backtrack(self):
+		if self.parentNode == None:
+			return "Root Node"
+		else:
+			return self.parentNode.parentNode
