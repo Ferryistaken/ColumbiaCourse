@@ -85,17 +85,17 @@ def bfs(dominoes, maxFrontierSize, maxStateNumber, verbose, dominoesNumber):
             # node with parent node=<node>, addedDomino= domino in for loop, and empy addedDomino list
             childNode = Node(node, dominoes[i], node.addedDominoList)
             childNode.addedDominoList.append(i)
-            if childNode.state not in explored or childNode.state not in queue:
+            if childNode.state not in explored:
                 if childNode.state.isASolution():
                     print("Found A Solution!")
                     print(childNode.addedDominoList)
-                    print(childNode.backtrack())
                     return False
                 else:
                     frontier.put(childNode)
+                    explored.add(str(childNode))
                     print("Viable Node: ")
+                    print(childNode.addedDominoList)
                     print(childNode.addedDomino)
-        explored.add(node.state)
 
 
 bfs(dominoes, maxFrontierSize, maxStateNumber, verbose, dominoesNumber)

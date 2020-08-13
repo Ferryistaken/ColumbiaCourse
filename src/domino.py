@@ -18,7 +18,7 @@ class Domino:
 				biggestString = self.bottomString
 				return Domino("", biggestString[len(smallestString):])
 		else:
-			return self
+			return "invalid"
 
 
 
@@ -34,7 +34,7 @@ class Node:
 	def __init__(self, parentNode=None, addedDomino=None, addedDominoList=[]):
 		self.parentNode = parentNode
 		self.addedDomino = addedDomino
-		self.addedDominoList = addedDominoList
+		self.addedDominoList = addedDominoList.copy()
 		if parentNode is None:
 			self.state = Domino("", "")
 		else:
@@ -82,5 +82,8 @@ class Node:
 			newList = [self.state.bottomString]
 			newList.append(self.addedDomino)
 			newState = (newDif, newList)
+
+	def __str__(self):
+		return self.state.topString + "/" + self.state.bottomString
 
 
