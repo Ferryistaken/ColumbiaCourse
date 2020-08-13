@@ -81,7 +81,7 @@ def bfs(dominoes, maxFrontierSize, maxDepth, verbose, dominoesNumber):
             childNode = Node(node, dominoes[i])
             if childNode.state not in explored:
                 if childNode.state.isASolution():
-                    print("Found A Solution! Depth: " + str(depth))
+                    print("Found A Solution!")
                     for i in range(0, depth):
                         print(childNode.addedDomino)
                         childNode = childNode.parentNode
