@@ -13,7 +13,7 @@ if len(sys.argv) != 2:
     print("Not enough or too many arguments")
     print("Usage: solve.py <path to input file>")
     print("Example: $ solve.py ../input.txt")
-    sys.exit(1)
+    sys.exit(66)
 
 # get the input file path as a command line argument
 inputPath = sys.argv[1]
@@ -86,6 +86,8 @@ def bfs(dominoes, maxFrontierSize, maxStateNumber, verbose, dominoesNumber):
             childNode = Node(node, dominoes[i], node.addedDominoList)
             childNode.addedDominoList.append(i)
             if childNode.state not in explored:
+                if childNode.state == "invalid":
+                    continue
                 if childNode.state.isASolution():
                     print("Found A Solution!")
                     print(childNode.addedDominoList)
