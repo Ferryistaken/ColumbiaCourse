@@ -71,6 +71,7 @@ def bfs(dominoes, maxFrontierSize, maxStateNumber, verbose, dominoesNumber):
     # first element is the difference, second is the "position" of the difference (top or bottom)
     initialState = Node()
     # check if initial state is the goal state
+    # test
     frontier.put(initialState)
     while True:
         if frontier.qsize() > maxFrontierSize:
