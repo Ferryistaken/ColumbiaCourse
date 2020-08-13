@@ -1,0 +1,12 @@
+certifi==2020.6.20
+chardet==3.0.4
+greenlet==0.4.16
+idna==2.10
+libvirt-python==6.4.0
+libxml2-python3==2.9.5
+msgpack==1.0.0
+pycairo==1.19.1
+PyGObject==3.36.1
+pynvim==0.4.1
+requests==2.24.0
+urllib3==1.25.10

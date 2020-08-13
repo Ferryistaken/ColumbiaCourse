@@ -1,4 +1,5 @@
 import sys
+import time
 from domino import Domino
 from domino import Node
 import queue
@@ -53,9 +54,11 @@ for i in range(0, int(dominoesNumber)):
     tempDomino.pop(0)
     dominoes["D" + str(i)] = Domino(tempDomino[0], tempDomino[1])
 
+'''
 for i in dominoes:
     print(i)
     print(dominoes[i])
+'''
 
 def bfs(dominoes, maxFrontierSize, maxDepth, verbose, dominoesNumber):
     frontier = queue.Queue()
@@ -69,11 +72,12 @@ def bfs(dominoes, maxFrontierSize, maxDepth, verbose, dominoesNumber):
         node = frontier.get()
         for i in dominoes:
             childNode = Node(node, dominoes[i])
-            print(childNode.describe())
             if childNode.state not in explored:
                 if childNode.state.isASolution():
                     print("Found A Solution!")
-                    print(childNode.state.describe())
+                    while True:
+                        print(childNode.parentNode.describe())
+                        time.sleep(10)
                     return True
                 frontier.put(childNode)
         explored.add(node.state)
