@@ -31,7 +31,7 @@ class Domino:
 
 
 class Node:
-	def __init__(self, parentNode=None, addedDomino=None, addedDominoList=None):
+	def __init__(self, parentNode=None, addedDomino=None, addedDominoList=[]):
 		self.parentNode = parentNode
 		self.addedDomino = addedDomino
 		self.addedDominoList = addedDominoList

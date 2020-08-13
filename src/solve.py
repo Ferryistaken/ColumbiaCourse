@@ -69,7 +69,9 @@ def bfs(dominoes, maxFrontierSize, maxDepth, verbose, dominoesNumber):
     initialState = Node()
     # check if initial state is the goal state
     frontier.put(initialState)
+    loop = 0
     while True:
+        print(loop)
         if frontier.qsize() > maxFrontierSize:
             print("Reached frontier limit")
             sys.exit(1)
@@ -78,17 +80,21 @@ def bfs(dominoes, maxFrontierSize, maxDepth, verbose, dominoesNumber):
             sys.exit(1)
         node = frontier.get()
         for i in dominoes:
-            childNode = Node(node, dominoes[i])
+            # node with parent node=<node>, addedDomino= domino in for loop, and empy addedDomino list
+            childNode = Node(node, dominoes[i], node.addedDominoList)
+            childNode.addedDominoList.append(dominoes[i])
             if childNode.state not in explored:
                 if childNode.state.isASolution():
                     print("Found A Solution!")
-                    for i in range(0, depth):
-                        print(childNode.addedDomino)
-                        childNode = childNode.parentNode
+                    print(childNode.addedDominoList + node.addedDominoList)
+                    loop += 1
                     return False
                 frontier.put(childNode)
+                print("Viable Node: ")
+                print(childNode.addedDomino)
                 depth += 1
         explored.add(node.state)
+        loop += 1
 
 
 bfs(dominoes, maxFrontierSize, maxDepth, verbose, dominoesNumber)
