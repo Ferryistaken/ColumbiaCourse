@@ -1,0 +1,117 @@
+SOLVING PROBLEMS WITH SEARCH
+
+An agent is something that perceives and acts in an environment.
+
+	- Uses sensors to perceive an environment
+	- Uses actuators to take actions
+
+A human agent
+	- Sensors: 5 senses
+	- Actions: our limbs, our voice
+
+A robotic agent
+	- Sensors: a camera, microphone
+	- Actions: motors, speaker
+
+A software agent
+	- Sensors: Stroke on keyboard, network sockets, 
+	- Actuators: Screen
+
+Agent Function:
+	- Describes the actions an agent can take(behaviour an agent can take given input)
+	- Drawbacks
+		- Too large to store
+		- Abstract mathematical descriptions
+
+Agent Program:
+	- Practical implementation of agent function
+
+~~~~~~
+
+Vacuum World Problem
+	- 2 rooms
+	- 1 vacuum
+	- A room can be either dirty or clean
+
+Input:
+	- Which room we are in
+	- Is the room dirty?
+
+Actions:
+	- Move to an adiacent room
+	- Clean a room
+	- Check if a room is clean or dirty
+
+At the beginning both rooms are dirty
+
+Actions that we take:
+	- Clean room A
+	- Move to room B
+	- Clean room B
+Only 3 steps
+
+to know which action to take we have to simulate all possibilities
+
+~~~~~
+
+A rational agent is an agent that does the right thing
+
+Rationality depends on 4 things:
+	- The performance measure that defines success
+	- Agent's prior knowledge
+	- Action Space(possbile actions)
+	- Agent's sensory info so far
+
+Definition of a rational agent:
+	- For each possible percept sequence, a rational agent should select an action that is expected to maximize its performance measure, given evidence provided by percept sequence and whatever in-built knowledge that agent has.
+
+~~~~~~
+
+Properties of environments:
+	- Fully observable VS partially observable
+		- Fully observable: detect all aspects relevant  to action choice
+		- Partially observable: cannot detect all aspects relevant to action choice due to noise/interference
+	- Deterministic VS Stochastic:
+		- Deterministic: if the next environment state is completely deterministic
+			- The vacuum cleaner program is deterministic
+		- Stochastic: the next state cannot be determined with 100% accuracy, next possible states are quantified in terms of probabilities
+			- For example: Throwing a dice. You know the outcomes but no outcome has 100% accuracy of happening
+	- Static VS Dynamic
+		- Dynamic:  If the environment can change while the agent in trying to act
+		- Static: If the environment doesn't change
+			- Chess is static, because it cannot change WHILE you act
+	- Discrete VS Continous
+		- The way time is handled
+			- Taxi: continous
+			- Chess: discrete
+	- Known VS Unknown
+		- Are outcomes deterministic or probabilistic?
+		- Do things have to be learned?
+	- Episodic VS Sequential:
+		- Episodic: Future actions don't depend on prior actions
+		- Sequential: Future actions depend on previous actions
+
+	Hardest Cases:
+		- Partially Observable
+		- Stochastic
+		- Dynamic
+		- Continous
+		- Unknown
+		- Sequential
+
+~~~~~
+
+Types of agents:
+	- Simple reflex agents
+		- condition-action rules
+			- "If this then that"
+	- Model based agents
+		- Action is based on a model of the world
+		- Updates the model through actions
+	- Goal Based agents
+		- Agent works toward achieving goal state
+		- Use search to find goal
+	- Utility based agensts
+		- Take actions based on an evaluation function
+		- Want to reach goal state
+			- Utility provides guidance

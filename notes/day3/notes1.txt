@@ -1,0 +1,28 @@
+Post Correspondance Problem
+
+You are given a collection of dominoes.
+Each domino has a string on the top and bottom.
+You have unlimited copies of each domino.
+
+The goal is to choose a sequence of dominoes such that the top and bottom strings match.
+
+
+1 use bfs for the frontier
+2 
+
+
+store the difference between top and bottom, if there is no difference they match
+
+only add to your frontier if you haven't seen the state before
+
+
+INPUT:
+	- Maximum size of the frontier used in bfs
+	- Value of some kind of parameter (max depth) - the program could become infinite
+	- Set of dominoes
+	- A flag indicating the type of output
+
+OUTPUT: (on of these 3)
+	- A sequence of dominoes that solves the problem
+	- A flag indicating that no solution exists
+	- A flag indicating that no solution exists within the limits of your search

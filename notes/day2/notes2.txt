@@ -1,0 +1,218 @@
+INTRODUCTION TO SEARCH
+
+
+A problem that can be defined formally by 5 components
+	- Initial state: the state in which an agent starts in
+	- Actions: Description of all possible actions available in the agent
+	- Transistion model: returns the next state given the current state and action a
+	- Goal state: the state which our agent wants to get to
+	- Path cost: Measures cost of reachine goal state
+
+State space:
+	Form a graph of nodes and edges
+		- Nodes represent states
+		- Edges represent actions you can take
+		- Path is a sequence from one node to another
+
+Vacuum problem:
+	Initial State:
+		- [[A, dirty], [B, ???]]
+	Actions:
+		- [Clean, moveLeft, moveRight, CheckRoom]
+	Transistion model:
+		- [A, [A, dirty], [B, ???], clean -> [A, [A, Clean], [B, ???]]]
+		- ...
+		- 2, 3, 3 = 2 * 3 * 3 = 18 * 4 = 72 total cases for our transition model
+	- Goal State
+		- [B, [A, clean], [B, clean]]
+		- [A, [A, clean], [B, clean]]
+	- Path cost
+		- Each step has 1 cost
+
+~~~~~~
+
+Real World Problem: Route Finding problem(plane travel)
+
+States:
+	- Location
+	- Time
+	- Prior info
+
+Initial state:
+	- [starting city, initialTime, []]
+Actions:
+	- [Fly]
+Transition Model:
+	- [[initial state, time, []] takeAFlight -> [new city, new time, [prev city]]
+Goal:
+	- [Destination, arrival time, [all stops along the way]]
+
+~~~~~~
+
+N-Queens problem
+
+State:
+	- Keep track positions of queens on board
+		- [Q1: A1, Q2: B2, Q3: D4]
+	- Need a way to evaluate if state is valid or not
+		- Can the queen attack each other?
+
+Initial state:
+	- []
+
+Actions:
+	- Place a queen on an open space on the board
+
+Transition Model:
+	- [], add quenn B3, -> {[Q1: B3]}
+
+Goal state:
+	- A valid state where we have 8 queens on the board
+
+Path cost:
+	- Number of collisions
+
+
+~~~~~~~
+
+Searching for solutions
+	- build a search tree
+		- nodes = states
+		- edges = actions
+	- Start with initial states
+	- Create a frontier of states reachable currently
+		- want to avoid adding repeated states
+	- Parent-child nodes(transition model)
+
+fun graphSearch(problem) -> Result<Solution, Failure> {
+		initialize frontier using initial states of problem
+		initialize explored set to be empty // states that we already checked
+		loop {
+			if frontier is empty -> Failure
+			Choose a node from the frontier
+			if node contains goal state -> Solution
+			Add node to explored
+			add new reachable nodes to frontier if they are not already in frontier/explored
+		}
+}
+
+
+Each node can keep track of this information:
+	- state
+	- parent
+	- action applied to the parent
+	- path cost
+
+
+Measuring problem-solving performance
+	- Completeness: Will algorithm terminate?
+	- Optimality: Does algorithm find goal?
+	- Time: How long does it take?
+	- Space: How much memory does it take?
+
+
+~~~~~~
+
+Blind search Strategies
+	- BFS -> breadth first search
+	- DFS -> depth first search
+	- Iterative deepening
+
+
+~~~~~
+
+BFS
+	- Uses something called a FIFO (First in, First out) structure for frontier (you use the first node you added as the first node, second as second ...)
+	- Finds the shallowest solution node(the one that is closest to the initial state)
+	- Complete?
+		- No
+	- Optimal?
+		- Yes
+	- Time:
+		- Branching factor: maximum number of states from any given state
+			- Does not have to be binary
+		- Depth factor: how many levels can your graph have
+		- Branching Factor = b, Depth Factor = d, Then TIME b^d
+	- Space:
+		- Frontier: b^d
+		- Explored: b^{d}-1
+	
+	2^20 = 1,048,576
+	b^d grows very quickly
+
+fun BFS(problem) -> Result<Solution, Faluire> {
+	node = initial state
+	if node = goal state -> solution
+	queue = FIFO object
+	explored = an empty set
+	loop {
+		if queue = empty -> Failure
+		node = queue.remove() // extract first element from queue
+		add node state to explored
+		for each actions possible {
+			child_node = get_child_node(node, action) // given node and action returns next state
+			if child.State not in explored or queue {
+				if child.state = goal state -> Solution
+				add child to queue
+			}
+		}
+	}
+}
+
+
+~~~~~~~~
+
+DFS (depth first search)
+	- uses LIFO structure for frontier (last in, first out)
+	- returns first solution that it finds
+	- Completeness
+		- No
+	- Optimality
+		- No
+	- Time
+		- branching factor = b, depth factor = d, depth = l
+		- b^d
+	- Space
+		- b*l
+		- more space efficient
+
+
+
+~~~~~~~
+
+Iterative Deepening
+	- middleground between BFS and DFS
+	- Completeness
+		- Yes
+	- Optimality
+		- Yes
+	- Time
+		- b^d
+	- Space
+		- b*d
+
+	- You start with dfs until a depth
+
+
+fun depth_limited_search(limit) -> Restur<Solution, Error>
+	return recursive_dls(initialstate, limit);
+
+Function recursive_dls(node, limit)
+	if node.state = goal return solution/success
+	else if limit = 0 return limit_reached
+	else
+		limit_reached = false
+		for each action in action space:
+			child = get_next_state(node, action)
+			result = recursive_dls(child, limit -1)
+			if result == limit_reached
+				limit_reached = true
+			else if success return result
+		return cutoff/failure // if we reach here our dls did not succeed
+
+
+fun iterative_deepening_search(limit):
+	for depth = 0 to limit:
+		Result = depth_limited_search(depth)
+		if result != cutoff then return result
+	return cutoff

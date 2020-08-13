@@ -1,0 +1,165 @@
+What is intellilgence?
+	- the ability to make a decision on your own, and to adapt based on input
+
+What is AIs goal?
+	- Understand what goes on around him, and achieve Autonomy
+
+What is AI?
+	- 2 axis
+		- thought processes and reasoning
+		- behaviour
+
+			^
+			|
+  Thinking  | Thinking
+  Humanly   | Rationally
+			|
+---------------------------->
+			|
+Act Humanly | Act Rationally
+			|
+			|
+
+~~~~~
+
+Acting Humanly:
+	- Turing Test Approach
+		- A computer passes this test if a human interrogator after posing written questions gets written answers that they cannot distinguish from human responses
+		- To pass this test:
+			- Natural language processing
+				- Allows for communication through language
+			- Knowledge representation
+				- Encode the data in a meaningful way in order to process it
+			- Automatic reasoning:
+				- Use that stored info to answers questions and draw consclusions
+			- Machine learning:
+				- To adapt to new circumstances
+
+The Total Turing Test is an extension of the turing test:
+	- It includes video signal to test perceptual abilities and the ability to interact with objects
+	- Requires:
+		- Computer Vision
+			- Recongnize objects
+		- Robotics:
+			- Interact with objects
+
+~~~~~
+
+Thinking Humanly: | Cognitive modeling approach
+	- How do you determine how humans work?
+		- Brain Imaging
+		- Human actions(through psycological experiences)
+
+	- Translate that info into a program
+
+	- Cognitive Science
+		- Combines computer models from AI and experimental techniques from psycology to construct precise theories of the human mind
+
+~~~~~~
+
+Thinking Rationally:
+	- "Laws of thought" approach
+	- Field of Logic
+	- Using precise notation for statements about all kinds of objects in the world and thei relations among them.
+	- In theory, this approach can be used to SOLVE ANY SOLVABLE PROBLEMS -> it is possible in theory but it isn't practical.
+	- Obstacles
+		- Principle VS Practice
+		- Difficulty in translating informal knowledge into formal knowledge
+
+~~~~
+
+Acting Rationally:
+	- The rational agent approach
+	- Agent: Something that acts
+- Computer Agent:
+	- Operate autonomously
+	- Perceive the environment
+	- Persist over a prolonged period of time
+	- Be able to adapt to change
+	- Create and pursuit goals
+
+- Ration Agent:
+	- An agent that acts in a way to achieve the best outcome or the best expected outcome in face of uncertainty
+
+- Comparison to other approaches
+	- More general than "Laws of thought"
+	- More well defined thatn the other human approaches
+
+Limited rationality VS perfect rationality
+
+~~~~
+
+Foundations of AI
+- Philosophy
+- Mathematics
+- Economics
+- Neuroscience
+- Psycology
+- Computer Engineering
+- Control theory & cybernetics
+- Linguistics
+
+Philosophy
+	- How does the mind arise from a physical brain?
+	- The connection between the mind and the body
+
+Mathematics
+	- What can be computed?
+	- Hilbert's 23 problems, Godel's incompleteness theorem
+	- Halting Problem
+	- NP-completeness
+		- Category of problems that are difficult to solve in a reasonable amount of time
+	- Probablity
+	- Economics
+		- How should we make decisions to maximize profits?
+		- Decision Theory, Game Theory
+
+Neuroscience
+	- How do brains process information?
+	- Neural Networks
+	- Neurons(nerve cells)
+	- Broca's area (region of brain for speech production)
+
+Even with a computer with infinite resources, we still would not know how to achieve brain's level of intellilgence
+
+
+Psycology
+	- How do humans and animals think and act?
+	- Behaviour vs cognitive psiclogy
+		- Results of experiments based on actions
+		- Computer modelling of memory, language, and logical thinking
+
+Computer Engineering
+	- How can we build an efficient computer?
+
+Control Theory and Cybernetics
+	- How can artifacts operate under their own control
+	- Designing Algorithms w/ objective functions to determine optimal actions
+
+Linguistics
+	- How does language relate to thought?
+	- Natural Language processing
+	- Knowledge representation
+	- Natural language vs programming language
+
+~~~~~
+
+History of AI
+	- The gestation of AI(1943 - 1955)
+	- The birth of AI(1956)
+	- 1952 - 1969 ( Early enthusiasm, great expectations )
+	- 1966 - 1973 ( Difficulties encountered, a dose of reality )
+	- 1980 - present ( AI becomes and industry )
+	- 1987 - present ( AI adopts scientific method )
+	- 2001 - present ( Availability of large data sets )
+
+
+~~~~~
+
+State of The Art
+
+	- Speech Recognition
+	- Robotic Vehicles
+	- Spam
+	- Game Playing
+	- Machine Translation
