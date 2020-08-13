@@ -31,9 +31,10 @@ class Domino:
 
 
 class Node:
-	def __init__(self, parentNode=None, addedDomino=None):
+	def __init__(self, parentNode=None, addedDomino=None, addedDominoList=None):
 		self.parentNode = parentNode
 		self.addedDomino = addedDomino
+		self.addedDominoList = addedDominoList
 		if parentNode is None:
 			self.state = Domino("", "")
 		else:

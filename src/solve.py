@@ -61,6 +61,7 @@ for i in dominoes:
 '''
 
 def bfs(dominoes, maxFrontierSize, maxDepth, verbose, dominoesNumber):
+    maxFrontierSize = int(maxFrontierSize)
     frontier = queue.Queue()
     explored = set()
     depth = 0
@@ -69,17 +70,24 @@ def bfs(dominoes, maxFrontierSize, maxDepth, verbose, dominoesNumber):
     # check if initial state is the goal state
     frontier.put(initialState)
     while True:
+        if frontier.qsize() > maxFrontierSize:
+            print("Reached frontier limit")
+            sys.exit(1)
+        elif frontier.qsize() == 0:
+            print("No more items in frontier")
+            sys.exit(1)
         node = frontier.get()
         for i in dominoes:
             childNode = Node(node, dominoes[i])
             if childNode.state not in explored:
                 if childNode.state.isASolution():
                     print("Found A Solution!")
-                    while True:
-                        print(childNode.parentNode.describe())
-                        time.sleep(10)
-                    return True
+                    for i in range(0, depth):
+                        print(childNode.addedDomino)
+                        childNode = childNode.parentNode
+                    return False
                 frontier.put(childNode)
+                depth += 1
         explored.add(node.state)
 
 
