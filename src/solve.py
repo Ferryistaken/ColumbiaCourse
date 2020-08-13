@@ -27,7 +27,7 @@ if input[-1] == "|":
 input = input.split("|")
 
 maxFrontierSize = input[0]
-maxDepth = input[1]
+maxStateNumber = input[1]
 
 if input[2] == 0:
     verbose = False
@@ -60,8 +60,11 @@ for i in dominoes:
     print(dominoes[i])
 '''
 
-def bfs(dominoes, maxFrontierSize, maxDepth, verbose, dominoesNumber):
-    maxFrontierSize = int(maxFrontierSize)
+maxFrontierSize = int(maxFrontierSize)
+maxStateNumber = int(maxStateNumber)
+
+
+def bfs(dominoes, maxFrontierSize, maxStateNumber, verbose, dominoesNumber):
     frontier = queue.Queue()
     explored = set()
     depth = 0
@@ -73,7 +76,7 @@ def bfs(dominoes, maxFrontierSize, maxDepth, verbose, dominoesNumber):
         if frontier.qsize() > maxFrontierSize:
             print("Reached frontier limit")
             sys.exit(1)
-        elif frontier.qsize() == 0:
+        elif len(explored) > maxStateNumber:
             print("No more items in frontier")
             sys.exit(1)
         node = frontier.get()
@@ -94,4 +97,4 @@ def bfs(dominoes, maxFrontierSize, maxDepth, verbose, dominoesNumber):
         explored.add(node.state)
 
 
-bfs(dominoes, maxFrontierSize, maxDepth, verbose, dominoesNumber)
+bfs(dominoes, maxFrontierSize, maxStateNumber, verbose, dominoesNumber)

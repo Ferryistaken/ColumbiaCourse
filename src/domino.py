@@ -52,3 +52,35 @@ class Node:
 			return "Root Node"
 		else:
 			return self.parentNode.parentNode
+
+	def getChildState(self):
+		# dif is +/- and the caracthers
+		dif = self.state.bottomString + self.state.bottomString
+		top = self.addedDomino.topString
+		bottom = self.addedDomino.bottomString
+
+		if dif.startswith("+"):
+			newTop = dif[1:] + top
+			# if the state is valid
+			if newTop.startswith(bottom):
+				newDif = "+" + newTop[len(bottom):]
+			elif bottom.startswith(newTop):
+				newDif = "-" + bottom[len(newTop):]
+			else:
+				return "invalid"
+			newList = [self.state.topString]
+			newList.append(self.addedDomino)
+			newState = (newDif, newList)
+		elif dif.startswith("-"):
+			newBottom = dif[1:] + bottom
+			if newBottom.startswith(top):
+				newDif = "-" + newBottom[len(top):]
+			elif top.startswith(newBottom):
+				newDif = "+" + top[len(newBottom):]
+			else:
+				return "invalid"
+			newList = [self.state.bottomString]
+			newList.append(self.addedDomino)
+			newState = (newDif, newList)
+
+
