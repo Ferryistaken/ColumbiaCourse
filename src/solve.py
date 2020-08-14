@@ -111,6 +111,7 @@ bfsResult = ""
 frontier = queue.Queue()
 
 
+
 def bfs(dominoes, maxFrontierSize, maxExploredSize, verbose):
     global bfsResult
     global frontier
