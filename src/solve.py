@@ -1,5 +1,4 @@
 import sys
-import time
 from domino import Domino
 from domino import Node
 import queue
