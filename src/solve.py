@@ -175,3 +175,5 @@ else:
 
 
 bfs(dominoes, maxFrontierSize, verbose)
+
+# if I don't find a solution with bfs I loop in the frontier and I perform iterative deepening for each state in the frontier
