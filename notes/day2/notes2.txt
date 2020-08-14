@@ -194,6 +194,8 @@ Iterative Deepening
 	- You start with dfs until a depth
 
 
+# if I don't find a solution with bfs I loop in the frontier and I perform iterative deepening for each state in the frontier
+
 fun depth_limited_search(limit) -> Restur<Solution, Error>
 	return recursive_dls(initialstate, limit);
 

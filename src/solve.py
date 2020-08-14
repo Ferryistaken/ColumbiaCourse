@@ -96,12 +96,12 @@ def iterativeDeepening(state, limit):
     return "Limit Reached"
 
 solutionSet = []
-result = ""
+bfsResult = ""
 frontier = queue.Queue()
 
 
 def bfs(dominoes, maxFrontierSize, verbose):
-    global result
+    global bfsResult
     global frontier
     global solutionSet
     explored = set()
@@ -112,7 +112,7 @@ def bfs(dominoes, maxFrontierSize, verbose):
     frontier.put(initialState)
     while True:
         if frontier.qsize() > maxFrontierSize:
-            result = "Failure"
+            bfsResult = "Failure"
             print("Reached frontier limit")
             sys.exit(1)
         else:
@@ -127,7 +127,7 @@ def bfs(dominoes, maxFrontierSize, verbose):
                     if childNode.state == "invalid":
                         continue
                     elif childNode.state.isASolution():
-                        result == "Solution"
+                        bfsResult == "Solution"
                         print("Found A Solution!")
                         print(childNode.addedDominoList)
                         sys.exit(0)
@@ -138,18 +138,18 @@ def bfs(dominoes, maxFrontierSize, verbose):
                             print("Found a viable Node: " + str(childNode.addedDominoList))
                             print("Object: " + str(childNode.addedDomino))
             if len(explored) == 0 and frontier.qsize() == 0:
-                result = "Failure"
+                bfsResult = "Failure"
                 print("No solution possible")
                 sys.exit(1)
             if len(explored) != 0 and frontier.qsize() == 0:
-                result = "Failure"
+                bfsResult = "Failure"
                 print("Explored is more than 0, but frontier is empty")
                 sys.exit(1)
 
-if result == "Failure":
+if bfsResult == "Failure":
     pass
 
-if result != "Solution":
+if bfsResult != "Solution":
     limitReached = False
     # you cannot iterate a queue without removing items from it, so I iterate over a copy of it
     iterableFrontier = frontier
@@ -166,6 +166,9 @@ if result != "Solution":
         else:
             result = "Limit Reached"
 
+bfs(dominoes, maxFrontierSize, verbose)
+
+
 if result == "success":
     pass
 elif result == "Failure":
@@ -174,6 +177,3 @@ else:
     print("Limit Reached")
 
 
-bfs(dominoes, maxFrontierSize, verbose)
-
-# if I don't find a solution with bfs I loop in the frontier and I perform iterative deepening for each state in the frontier
