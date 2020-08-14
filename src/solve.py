@@ -146,6 +146,8 @@ def bfs(dominoes, maxFrontierSize, verbose):
                 print("Explored is more than 0, but frontier is empty")
                 sys.exit(1)
 
+bfs(dominoes, maxFrontierSize, verbose)
+
 if bfsResult == "Failure":
     pass
 

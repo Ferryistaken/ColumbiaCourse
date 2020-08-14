@@ -1,0 +1,8 @@
+3
+55
+1
+4
+1 c cca
+2 ac ba
+3 bb b
+4 ac cb
