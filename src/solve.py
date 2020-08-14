@@ -29,7 +29,7 @@ input = input.split("|")
 maxFrontierSize = input[0]
 maxStateNumber = input[1]
 
-if input[2] == 0:
+if input[2] == "0":
     verbose = False
 else:
     verbose = True
@@ -64,10 +64,9 @@ maxFrontierSize = int(maxFrontierSize)
 maxStateNumber = int(maxStateNumber)
 
 
-def bfs(dominoes, maxFrontierSize, maxStateNumber, verbose, dominoesNumber):
+def bfs(dominoes, maxFrontierSize, maxStateNumber, verbose):
     frontier = queue.Queue()
     explored = set()
-    depth = 0
     # first element is the difference, second is the "position" of the difference (top or bottom)
     initialState = Node()
     # check if initial state is the goal state
@@ -78,26 +77,33 @@ def bfs(dominoes, maxFrontierSize, maxStateNumber, verbose, dominoesNumber):
             print("Reached frontier limit")
             sys.exit(1)
         elif len(explored) > maxStateNumber:
-            print("No more items in frontier")
+            print("Maximum explored states reached")
             sys.exit(1)
-        node = frontier.get()
-        for i in dominoes:
-            # node with parent node=<node>, addedDomino= domino in for loop, and empy addedDomino list
-            childNode = Node(node, dominoes[i], node.addedDominoList)
-            childNode.addedDominoList.append(i)
-            if childNode.state not in explored:
-                if childNode.state == "invalid":
-                    continue
-                if childNode.state.isASolution():
-                    print("Found A Solution!")
-                    print(childNode.addedDominoList)
-                    return False
-                else:
-                    frontier.put(childNode)
-                    explored.add(str(childNode))
-                    print("Viable Node: ")
-                    print(childNode.addedDominoList)
-                    print(childNode.addedDomino)
+        else:
+            node = frontier.get()
+            for i in dominoes:
+                # node with parent node=<node>, addedDomino= domino in for loop, and empy addedDomino list
+                childNode = Node(node, dominoes[i], node.addedDominoList)
+                # add the key to the added domino list (not the actual domino object)
+                childNode.addedDominoList.append(i)
+                if childNode.state not in explored:
+                    if childNode.state == "invalid":
+                        continue
+                    elif childNode.state.isASolution():
+                        print("Found A Solution!")
+                        print(childNode.addedDominoList)
+                        sys.exit(0)
+                    else:
+                        frontier.put(childNode)
+                        explored.add(str(childNode))
+                        if verbose:
+                            print("Found a viable Node: " + str(childNode.addedDominoList))
+                            print("Object: " + str(childNode.addedDomino))
+            if len(explored) == 0 and frontier.qsize() == 0:
+                print("No solution possible")
+                sys.exit(1)
+            if len(explored) != 0 and frontier.qsize() == 0:
+                print("Explored is more than 0, but frontier is empty")
+                sys.exit(1)
 
-
-bfs(dominoes, maxFrontierSize, maxStateNumber, verbose, dominoesNumber)
+bfs(dominoes, maxFrontierSize, maxStateNumber, verbose)
