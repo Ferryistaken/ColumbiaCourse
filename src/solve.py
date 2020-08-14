@@ -63,6 +63,8 @@ for i in dominoes:
 maxFrontierSize = int(maxFrontierSize)
 maxExploredSize = int(maxExploredSize)
 
+
+
 def depthLimitedSearch(dominoes, state, limit):
     return recursiveDls(dominoes, state, limit)
 
@@ -70,34 +72,39 @@ def recursiveDls(dominoes, state, limit):
     if state != "invalid":
         if state.isASolution():
             # TODO: make the solutionset
-            return "success"
+            return "success", state.addedDominoList
         elif limit == 0:
-            return "Limit Reached"
+            return "Limit Reached", []
         else:
             limitReached = False
             for i in dominoes:
-                childNode = Node(state, dominoes[i], state.addedDominoList)
+                newDominoList = state.addedDominoList + [i]
+                childNode = Node(state, dominoes[i], newDominoList)
                 result = recursiveDls(dominoes, childNode, limit-1)
                 if result[0] == "Limit Reached":
                     limitReached = True
                 elif result[0] == "success":
                     return result
             if limitReached:
-                return "Limit Reached"
+                return "Limit Reached", []
             else:
-                return "No solution Found"
+                return "No solution Found", []
     else:
-        return "invalid"
+        return "invalid", []
 
 def iterativeDeepening(state, limit):
     print("Starting iterative deepening with state " + str(state))
+    limitReached = False
     for depth in range(0, limit):
         result = depthLimitedSearch(dominoes, state, depth)
         if result[0] == "Limit Reached":
-            return result
+            limitReached = True
         elif result[0] == "success":
             return result
-    return "Limit Reached"
+    if limitReached == True:
+        return "Limit Reached", []
+    else:
+        return "failure", []
 
 solutionSet = []
 bfsResult = ""
@@ -114,15 +121,16 @@ def bfs(dominoes, maxFrontierSize, maxExploredSize, verbose):
     # check if initial state is the goal state
     # test
     frontier.put(initialState)
+    counter = 0
     while True:
         if frontier.qsize() > maxFrontierSize:
             bfsResult = "Failure"
             print("Reached frontier limit")
             break
-        elif len(explored) > maxExploredSize:
+        elif counter > maxExploredSize:
             bfsResult = "Failure"
             print("Reached explored nodes limit in bfs")
-            sys.exit(1)
+            return False
         else:
             node = frontier.get()
             for i in dominoes:
@@ -142,6 +150,7 @@ def bfs(dominoes, maxFrontierSize, maxExploredSize, verbose):
                     else:
                         frontier.put(childNode)
                         explored.add(str(childNode))
+                        counter += 1
                         if verbose:
                             print("Found a viable Node: " + str(childNode.addedDominoList))
                             print("Object: " + str(childNode.addedDomino))
@@ -173,16 +182,16 @@ if bfsResult != "Solution":
     print("Starting Stage 2 - Iterative deepening")
     for state in iterableFrontier:
         result = iterativeDeepening(state, maxExploredSize)
-        if result == "success":
+        if result[0] == "success":
             print("Iterative deepening success")
             break
-        elif result == "Limit Reached":
+        elif result[0] == "Limit Reached":
             limitReached = True
-    if result != "success":
+    if result[0] != "success":
         if limitReached == False:
-            result = "failure"
+            result = "failure", []
         else:
-            result = "Limit Reached"
+            result = "Limit Reached", []
 
 print(result)
 
