@@ -1,0 +1,7 @@
+In order to use search to beat a human in a chess game you couldn't use a blind search tree, because the goal state is too deep in the tree
+
+Because of this the algorithm has to use an utility function which tells him which state would be the best inside of boundaries
+
+it uses hill climbing -> more optmitized for this
+
+search with adversaries is called "adversarial search"

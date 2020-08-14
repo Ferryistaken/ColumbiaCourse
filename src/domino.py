@@ -54,10 +54,13 @@ class Node:
 			return self.parentNode.parentNode
 
 	def isASolution(self):
-		if self.state.topString == self.state.bottomString:
-			return True
-		else:
+		if self.state == "invalid":
 			return False
+		else:
+			if self.state.topString == self.state.bottomString:
+				return True
+			else:
+				return False
 
 	def getChildState(self):
 		# dif is +/- and the caracthers

@@ -67,32 +67,35 @@ def depthLimitedSearch(dominoes, state, limit):
     return recursiveDls(dominoes, state, limit)
 
 def recursiveDls(dominoes, state, limit):
-    if state.isASolution():
-        # TODO: make the solutionset
-        return "success"
-    elif limit == 0:
-        return "Limit Reached"
-    else:
-        limitReached = False
-        for i in dominoes:
-            childNode = Node(state, dominoes[i], state.addedDominoList)
-            result = recursiveDls(dominoes, childNode, limit-1)
-            if result == "Limit Reached":
-                limitReached = True
-            elif result == "success":
-                return result
-        if limitReached:
+    if state != "invalid":
+        if state.isASolution():
+            # TODO: make the solutionset
+            return "success"
+        elif limit == 0:
             return "Limit Reached"
         else:
-            return "No solution Found"
+            limitReached = False
+            for i in dominoes:
+                childNode = Node(state, dominoes[i], state.addedDominoList)
+                result = recursiveDls(dominoes, childNode, limit-1)
+                if result[0] == "Limit Reached":
+                    limitReached = True
+                elif result[0] == "success":
+                    return result
+            if limitReached:
+                return "Limit Reached"
+            else:
+                return "No solution Found"
+    else:
+        return "invalid"
 
 def iterativeDeepening(state, limit):
-    print("Starting Stage 2")
+    print("Starting iterative deepening with state " + str(state))
     for depth in range(0, limit):
         result = depthLimitedSearch(dominoes, state, depth)
-        if result == "Limit Reached":
+        if result[0] == "Limit Reached":
             return result
-        elif result == "success":
+        elif result[0] == "success":
             return result
     return "Limit Reached"
 
@@ -118,7 +121,7 @@ def bfs(dominoes, maxFrontierSize, maxExploredSize, verbose):
             break
         elif len(explored) > maxExploredSize:
             bfsResult = "Failure"
-            print("Reached explored nodes limit")
+            print("Reached explored nodes limit in bfs")
             sys.exit(1)
         else:
             node = frontier.get()
@@ -167,9 +170,11 @@ if bfsResult != "Solution":
     limitReached = False
     # you cannot iterate a queue without removing items from it, so I iterate over a copy of it
     iterableFrontier = getIterableFrontier(frontier)
+    print("Starting Stage 2 - Iterative deepening")
     for state in iterableFrontier:
         result = iterativeDeepening(state, maxExploredSize)
         if result == "success":
+            print("Iterative deepening success")
             break
         elif result == "Limit Reached":
             limitReached = True
@@ -178,5 +183,7 @@ if bfsResult != "Solution":
             result = "failure"
         else:
             result = "Limit Reached"
+
+print(result)
 
 
