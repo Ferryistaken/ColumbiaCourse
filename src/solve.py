@@ -27,7 +27,7 @@ if input[-1] == "|":
 input = input.split("|")
 
 maxFrontierSize = input[0]
-maxStateNumber = input[1]
+maxDepth = input[1]
 
 if input[2] == "0":
     verbose = False
@@ -61,11 +61,49 @@ for i in dominoes:
 '''
 
 maxFrontierSize = int(maxFrontierSize)
-maxStateNumber = int(maxStateNumber)
+maxDepth = int(maxDepth)
+
+def depthLimitedSearch(dominoes, state, limit):
+    return recursiveDls(dominoes, state, limit)
+
+def recursiveDls(dominoes, state, limit):
+    if state.isASolution():
+        # TODO: make the solutionset
+        return "success"
+    elif limit == 0:
+        return "Limit Reached"
+    else:
+        limitReached = False
+        for i in dominoes:
+            childNode = Node(state, dominoes[i], state.addedDominoList)
+            result = recursiveDls(dominoes, childNode, limit-1)
+            if result == "Limit Reached":
+                limitReached = True
+            elif result == "success":
+                return result
+        if limitReached:
+            return "Limit Reached"
+        else:
+            return "No solution Found"
+
+def iterativeDeepening(state, limit):
+    for depth in range(0, limit):
+        result = depthLimitedSearch(dominoes, state, depth)
+        if result == "Limit Reached":
+            return result
+        elif result == "success":
+            return result
+    return "Limit Reached"
+
+solutionSet = []
+result = ""
+frontier = queue.Queue()
 
 
-def bfs(dominoes, maxFrontierSize, maxStateNumber, verbose):
-    frontier = queue.Queue()
+def bfs(dominoes, maxFrontierSize, verbose):
+    global result
+    global frontier
+    global solutionSet
     explored = set()
     # first element is the difference, second is the "position" of the difference (top or bottom)
     initialState = Node()
@@ -74,10 +112,8 @@ def bfs(dominoes, maxFrontierSize, maxStateNumber, verbose):
     frontier.put(initialState)
     while True:
         if frontier.qsize() > maxFrontierSize:
+            result = "Failure"
             print("Reached frontier limit")
-            sys.exit(1)
-        elif len(explored) > maxStateNumber:
-            print("Maximum explored states reached")
             sys.exit(1)
         else:
             node = frontier.get()
@@ -86,10 +122,12 @@ def bfs(dominoes, maxFrontierSize, maxStateNumber, verbose):
                 childNode = Node(node, dominoes[i], node.addedDominoList)
                 # add the key to the added domino list (not the actual domino object)
                 childNode.addedDominoList.append(i)
+                solutionSet.append(i)
                 if childNode.state not in explored:
                     if childNode.state == "invalid":
                         continue
                     elif childNode.state.isASolution():
+                        result == "Solution"
                         print("Found A Solution!")
                         print(childNode.addedDominoList)
                         sys.exit(0)
@@ -100,10 +138,40 @@ def bfs(dominoes, maxFrontierSize, maxStateNumber, verbose):
                             print("Found a viable Node: " + str(childNode.addedDominoList))
                             print("Object: " + str(childNode.addedDomino))
             if len(explored) == 0 and frontier.qsize() == 0:
+                result = "Failure"
                 print("No solution possible")
                 sys.exit(1)
             if len(explored) != 0 and frontier.qsize() == 0:
+                result = "Failure"
                 print("Explored is more than 0, but frontier is empty")
                 sys.exit(1)
 
-bfs(dominoes, maxFrontierSize, maxStateNumber, verbose)
+if result == "Failure":
+    pass
+
+if result != "Solution":
+    limitReached = False
+    # you cannot iterate a queue without removing items from it, so I iterate over a copy of it
+    iterableFrontier = frontier
+    sentinel = object()
+    for state in iter(iterableFrontier.get(), sentinel):
+        result = iterativeDeepening(state, maxDepth, dominoes)
+        if result == "success":
+            break
+        elif result == "Limit Reached":
+            limitReached = True
+    if result != "success":
+        if limitReached == False:
+            result = "failure"
+        else:
+            result = "Limit Reached"
+
+if result == "success":
+    pass
+elif result == "Failure":
+    print("No solution")
+else:
+    print("Limit Reached")
+
+
+bfs(dominoes, maxFrontierSize, verbose)
