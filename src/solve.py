@@ -87,6 +87,7 @@ def recursiveDls(dominoes, state, limit):
             return "No solution Found"
 
 def iterativeDeepening(state, limit):
+    print("Starting Stage 2")
     for depth in range(0, limit):
         result = depthLimitedSearch(dominoes, state, depth)
         if result == "Limit Reached":
@@ -167,8 +168,6 @@ if bfsResult != "Solution":
     # you cannot iterate a queue without removing items from it, so I iterate over a copy of it
     iterableFrontier = getIterableFrontier(frontier)
     for state in iterableFrontier:
-        print("Iterable Fonteir")
-        print(state)
         result = iterativeDeepening(state, maxExploredSize)
         if result == "success":
             break
@@ -179,14 +178,5 @@ if bfsResult != "Solution":
             result = "failure"
         else:
             result = "Limit Reached"
-
-
-
-if result == "success":
-    pass
-elif result == "Failure":
-    print("No solution")
-else:
-    print("Limit Reached")
 
 
