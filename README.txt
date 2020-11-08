@@ -9,7 +9,7 @@ The program is written using the camelCase standard.
 The script takes 1 parameter, being the path to a file.
 
 Example of script usage:
-"python3 Ferrari_Alessandro_Driver.py ~/Downloads/input3.txt"
+"python3 src/solve.py assignments/input3.txt"
 
 Originally the program was split in 2 files, domino.py and solve.py, I didn't test all inputs after joining the 2 files, but it shouldn't cause any errors.
 
