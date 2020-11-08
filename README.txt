@@ -11,8 +11,6 @@ The script takes 1 parameter, being the path to a file.
 Example of script usage:
 "python3 src/solve.py assignments/input3.txt"
 
-Originally the program was split in 2 files, domino.py and solve.py, I didn't test all inputs after joining the 2 files, but it shouldn't cause any errors.
-
 File structure
 The file should follow the requirements given in the pdf:
 	- First Line: Max size of frontier
