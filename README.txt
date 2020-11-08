@@ -11,7 +11,7 @@ The script takes 1 parameter, being the path to a file.
 Example of script usage:
 "python3 src/solve.py assignments/input3.txt"
 
-File structure
+Input File structure:
 The file should follow the requirements given in the pdf:
 	- First Line: Max size of frontier
 	- Second Line: Max size of the set containing the explored states(to avoid going in an infinite loop)
